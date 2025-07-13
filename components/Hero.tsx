@@ -32,7 +32,7 @@ export default function HeroCodeShowcase() {
             I turn clean code into clean UI. Explore my skills in frontend, backend, and everything between.
           </p>
           <div className="flex justify-center md:justify-start gap-4">
-            <Link href={'/project'}>
+            <Link href={'/projects'}>
             <Button className="text-foreground cursor-pointer hover:text-foreground/50">
               See Projects
             </Button>
