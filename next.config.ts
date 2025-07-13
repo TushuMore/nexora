@@ -4,11 +4,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'img.clerk.com',
+        hostname: '**', // Allow images from any HTTPS domain
       },
       {
-        protocol: 'https',
-        hostname: 'i.pinimg.com',
+        protocol: 'http', // Optionally allow HTTP for local/dev environments
+        hostname: '**',
       },
     ],
   },
