@@ -35,6 +35,7 @@ export default async function BlogDetailsPage({ params }: BlogPageProps) {
       {blog.image && (
         <div className="overflow-hidden rounded-2xl shadow-lg mb-10">
           <Image
+          priority
             src={blog.image}
             alt={blog.title}
             width={1200}

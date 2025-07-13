@@ -1,3 +1,5 @@
+import Image from "next/image";
+import Link from "next/link";
 import { FC } from "react";
 
 interface Blog {
@@ -19,12 +21,6 @@ const BlogCard: FC<BlogCardProps> = ({ post }) => {
   return (
     <div className="p-4 border rounded-lg">
       <h2 className="text-xl font-semibold">{post.title}</h2>
-      <p className="text-muted-foreground">
-        {post.excerpt || post.description || "No description available"}
-      </p>
-      <p className="text-sm text-gray-500">
-        {post.date ? new Date(post.date).toLocaleDateString() : "No date"}
-      </p>
       {post.tags && post.tags.length > 0 && (
         <div className="flex gap-2 mt-2">
           {post.tags.map((tag) => (
@@ -35,11 +31,11 @@ const BlogCard: FC<BlogCardProps> = ({ post }) => {
         </div>
       )}
       {post.image && (
-        <img src={post.image} alt={post.title} className="mt-2 w-full h-40 object-cover" />
+        <Image width={1000} height={1000} priority src={post.image} alt={post.title} className="mt-2 w-full h-40 object-cover" />
       )}
-      <a href={`/blog/${post.slug}`} className="text-blue-500 mt-2 inline-block">
+      <Link href={`/blog/${post.slug}`} className="text-blue-500 mt-2 inline-block">
         Read More
-      </a>
+      </Link>
     </div>
   );
 };
