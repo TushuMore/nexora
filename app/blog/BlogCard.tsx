@@ -1,76 +1,47 @@
-"use client";
+import { FC } from "react";
 
-import { motion } from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
-
-interface BlogCardProps {
-  post: {
-    title: string;
-    slug: string;
-    excerpt?: string;
-    description?: string;
-    content?: string;
-    date: string;
-    tags: string[];
-    image?: string;
-  };
+interface Blog {
+  _id: string;
+  title: string;
+  slug: string;
+  description?: string;
+  excerpt?: string;
+  date?: string;
+  tags?: string[];
+  image?: string;
 }
 
-export default function BlogCard({ post }: BlogCardProps) {
-  const summary =
-    post.excerpt ||
-    post.description ||
-    post.content?.slice(0, 120) + "..." ||
-    "No summary available";
+interface BlogCardProps {
+  post: Blog;
+}
 
+const BlogCard: FC<BlogCardProps> = ({ post }) => {
   return (
-    <motion.div
-      whileHover={{ scale: 1.02 }}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4 }}
-      className="rounded-xl bg-muted/20 shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-    >
-      {/* ✅ Image with fallback */}
-      {post.image ? (
-        <Image
-        width={1000}
-        height={1000}
-          src={post.image}
-          alt={post.title}
-          className="w-full h-48 object-cover"
-        />
-      ) : (
-        <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500 text-sm">
-          No image available
-        </div>
-      )}
-
-      <div className="p-6 flex flex-col gap-2">
-        <h3 className="text-xl font-semibold">{post.title}</h3>
-
-        <p className="text-sm text-muted-foreground line-clamp-3">{summary}</p>
-
-        <div className="flex flex-wrap gap-2 mt-3">
-          {post.tags.map((tag, i) => (
-            <span
-              key={i}
-              className="text-xs bg-primary/10 text-primary px-2 py-1 rounded"
-            >
+    <div className="p-4 border rounded-lg">
+      <h2 className="text-xl font-semibold">{post.title}</h2>
+      <p className="text-muted-foreground">
+        {post.excerpt || post.description || "No description available"}
+      </p>
+      <p className="text-sm text-gray-500">
+        {post.date ? new Date(post.date).toLocaleDateString() : "No date"}
+      </p>
+      {post.tags && post.tags.length > 0 && (
+        <div className="flex gap-2 mt-2">
+          {post.tags.map((tag) => (
+            <span key={tag} className="text-sm bg-gray-200 px-2 py-1 rounded">
               {tag}
             </span>
           ))}
         </div>
-
-        <Link
-          href={`/blog/${post.slug}`}
-          className="text-sm mt-4 text-primary hover:underline"
-        >
-          Read More →
-        </Link>
-      </div>
-    </motion.div>
+      )}
+      {post.image && (
+        <img src={post.image} alt={post.title} className="mt-2 w-full h-40 object-cover" />
+      )}
+      <a href={`/blog/${post.slug}`} className="text-blue-500 mt-2 inline-block">
+        Read More
+      </a>
+    </div>
   );
-}
+};
+
+export default BlogCard;

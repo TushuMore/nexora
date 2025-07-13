@@ -3,9 +3,14 @@ import { Blog } from "@/models/Blogs";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  await connectDB();
-  const blogs = await Blog.find().sort({ createdAt: -1 });
-  return NextResponse.json(blogs);
+  try {
+    await connectDB();
+    const blogs = await Blog.find().lean();
+    return NextResponse.json(blogs, { status: 200 });
+  } catch (error) {
+    console.error("GET /api/blogs error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
 }
 
 function generateSlug(title: string) {

@@ -11,22 +11,24 @@ interface Blog {
   _id: string;
   title: string;
   slug: string;
-  description: string; // or excerpt
-  excerpt: string;
-  date: string;
-  tags: string[];
-  image: string;
+  description?: string;
+  excerpt?: string;
+  date?: string;
+  tags?: string[];
+  image?: string;
 }
 
 async function getBlogs(): Promise<Blog[]> {
   try {
-    const res = await axios.get<Blog[]>(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/blogs`
-    );
-    return res.data; // ✅ Return array directly
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    if (!baseUrl) {
+      throw new Error("NEXT_PUBLIC_BASE_URL is not defined");
+    }
+    const res = await axios.get<Blog[]>(`${baseUrl}/api/blogs`);
+    return res.data;
   } catch (err) {
     console.error("Failed to fetch blogs:", err);
-    return []; // Fallback to empty array
+    return [];
   }
 }
 
