@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default function HeroCodeShowcase() {
   return (
@@ -34,9 +35,11 @@ export default function HeroCodeShowcase() {
             <Button className="text-foreground cursor-pointer hover:text-foreground/50">
               See Projects
             </Button>
+            <Link href={"/Tushar-portfolio"} download>
             <Button variant="outline" className="cursor-pointer">
               Download Resume
             </Button>
+            </Link>
           </div>
         </motion.div>
       </motion.div>

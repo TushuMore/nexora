@@ -41,7 +41,7 @@ export default function AboutClient() {
 
             {/* Buttons */}
             <div className="flex flex-wrap gap-4 mt-4">
-              <Link href="/Tushar-More-Resume.pdf" download>
+              <Link href="/Tushar-portfolio.pdf" download>
                 <Button size="lg" className="rounded-full text-foreground cursor-pointer">
                   Download Resume
                 </Button>
@@ -106,7 +106,7 @@ export default function AboutClient() {
         >
           <h3 className="text-xl font-semibold">Let&apos;s work together 👇</h3>
 
-          <Link href="/Tushar-More-Resume.pdf" download>
+          <Link href="/Tushar-portfolio.pdf" download>
             <Button size="lg" className="w-full my-2 mb-5 text-foreground cursor-pointer">
               Download Resume
             </Button>
