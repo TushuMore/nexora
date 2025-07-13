@@ -6,6 +6,7 @@ export async function GET() {
   try {
     await connectDB();
     const blogs = await Blog.find().lean();
+    console.log("Blogs fetched from DB:", blogs); // Debug log
     return NextResponse.json(blogs, { status: 200 });
   } catch (error) {
     console.error("GET /api/blogs error:", error);

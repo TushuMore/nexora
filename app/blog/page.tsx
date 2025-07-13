@@ -22,9 +22,13 @@ async function getBlogs(): Promise<Blog[]> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     if (!baseUrl) {
-      throw new Error("NEXT_PUBLIC_BASE_URL is not defined");
+      console.error("NEXT_PUBLIC_BASE_URL is not defined in environment variables.");
+      throw new Error("Missing NEXT_PUBLIC_BASE_URL");
     }
-    const res = await axios.get<Blog[]>(`${baseUrl}/api/blogs`);
+    const url = `${baseUrl}/api/blogs`;
+    console.log("Fetching blogs from:", url); // Debug log
+    const res = await axios.get<Blog[]>(url);
+    console.log("Blogs fetched:", res.data); // Debug log
     return res.data;
   } catch (err) {
     console.error("Failed to fetch blogs:", err);
