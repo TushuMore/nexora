@@ -5,8 +5,10 @@ import { ContactType } from "@/types/contact";
 export default async function AdminContactsPage() {
   await connectDB();
 
-  const rawContacts = await Contact.find().sort({ createdAt: -1 }).lean();
+  // Explicitly fetch all contact messages sorted by newest
+  const rawContacts = await Contact.find({}).sort({ createdAt: -1 }).lean();
 
+  // Transform MongoDB documents to ContactType format
   const contacts: ContactType[] = rawContacts.map((raw) => ({
     _id: raw._id?.toString() || "",
     name: raw.name,
@@ -14,6 +16,9 @@ export default async function AdminContactsPage() {
     message: raw.message,
     createdAt: raw.createdAt?.toString() || "",
   }));
+
+  // Debug log to see how many contacts were fetched
+  console.log("Total contacts fetched:", contacts.length);
 
   return (
     <div className="p-6 space-y-8">
