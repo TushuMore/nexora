@@ -5,15 +5,15 @@ import { Quote } from "lucide-react"
 
 const testimonials = [
   {
-    name: "Rajesh Sharma",
-    text: "Tushar delivered an incredible website for us. Clean code and great communication!",
+    name: "Kiran Rajput",
+    text: "Great website and easy to use. Overall a great experience!",
   },
   {
-    name: "Sonal Patil",
-    text: "Highly professional and creative. The landing page was exactly what we needed.",
+    name: "Krushnal Mahajan",
+    text: "Excellent work ! He was quick, responsive, and deliverd exactly what we imagined",
   },
   {
-    name: "Aniket More",
+    name: "Mayur Gosavi",
     text: "Loved working with him! He nailed the UI design and interactions perfectly.",
   },
 ]
