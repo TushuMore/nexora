@@ -1,11 +1,7 @@
-import { Metadata } from "next";
-import BlogCard from "./BlogCard";
+"use client";
+import { useEffect, useState } from "react";
 import axios from "axios";
-
-export const metadata: Metadata = {
-  title: "Blog | Tushar More",
-  description: "Articles and thoughts on web development, design, and learning.",
-};
+import BlogCard from "./BlogCard";
 
 interface Blog {
   _id: string;
@@ -18,26 +14,27 @@ interface Blog {
   image?: string;
 }
 
-async function getBlogs(): Promise<Blog[]> {
-  try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    if (!baseUrl) {
-      console.error("NEXT_PUBLIC_BASE_URL is not defined in environment variables.");
-      throw new Error("Missing NEXT_PUBLIC_BASE_URL");
-    }
-    const url = `${baseUrl}/api/blogs`;
-    console.log("Fetching blogs from:", url); // Debug log
-    const res = await axios.get<Blog[]>(url);
-    console.log("Blogs fetched:", res.data); // Debug log
-    return res.data;
-  } catch (err) {
-    console.error("Failed to fetch blogs:", err);
-    return [];
-  }
-}
+export default function BlogPage() {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-export default async function BlogPage() {
-  const blogs = await getBlogs();
+  useEffect(() => {
+    async function fetchBlogs() {
+      try {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+        if (!baseUrl) {
+          throw new Error("Missing NEXT_PUBLIC_BASE_URL");
+        }
+        const url = `${baseUrl}/api/blogs`;
+        const res = await axios.get<Blog[]>(url);
+        setBlogs(res.data);
+      } catch (err) {
+        console.error("Failed to fetch blogs:", err);
+        setError("Failed to load blogs.");
+      }
+    }
+    fetchBlogs();
+  }, []);
 
   return (
     <section className="px-6 lg:px-16 py-20 min-h-screen">
@@ -49,7 +46,9 @@ export default async function BlogPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-6xl mx-auto">
-        {blogs.length === 0 ? (
+        {error ? (
+          <p className="col-span-full text-center text-red-500">{error}</p>
+        ) : blogs.length === 0 ? (
           <p className="col-span-full text-center text-muted-foreground">
             No blog posts available.
           </p>

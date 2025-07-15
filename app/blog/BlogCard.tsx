@@ -31,7 +31,14 @@ const BlogCard: FC<BlogCardProps> = ({ post }) => {
         </div>
       )}
       {post.image && (
-        <Image width={1000} height={1000} priority src={post.image} alt={post.title} className="mt-2 w-full h-40 object-cover" />
+        <Image
+          width={1000}
+          height={1000}
+          priority
+          src={post.image}
+          alt={post.title}
+          className="mt-2 w-full h-40 object-cover"
+        />
       )}
       <Link href={`/blog/${post.slug}`} className="text-blue-500 mt-2 inline-block">
         Read More
